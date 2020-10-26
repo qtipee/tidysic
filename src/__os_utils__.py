@@ -32,22 +32,22 @@ def file_extension(path):
     return os.path.splitext(path)[1]
 
 
-def create_dir(dir_path, dry_run):
+def create_dir(dir_path, dry_run=False):
     '''
     Creates the given directory if it does not exist yet.
     '''
     if dry_run:
-        _log_dry_run(f"Create directory {dir_path}")
+        _log_dry_run(f'Create directory {dir_path}')
     elif not os.path.exists(dir_path):
         os.makedirs(dir_path)
 
 
-def get_audio_files(directory_path):
+def get_audio_files(dir_path):
     '''
     Returns the audio files present in the given directory.
     '''
-    audio_files = [os.path.join(directory_path, f) for f in os.listdir(
-        directory_path) if os.path.splitext(f)[1] in audio_extensions]
+    audio_files = [os.path.join(dir_path, f) for f in os.listdir(
+        dir_path) if os.path.splitext(f)[1] in audio_extensions]
     return audio_files
 
 
@@ -58,13 +58,13 @@ def move_file(file, target_path, dry_run=False):
     if dry_run:
         # We don't display the two whole paths
         # Only the source's filename and the target directory
-        src = file.split("/")[-1]
-        target = "/".join(target_path.split("/")[:-1])
+        src = file.split('/')[-1]
+        target = '/'.join(target_path.split('/')[:-1])
         
         _log_dry_run([
-            "Moving file",
+            'Moving file',
             f"'{src}'",
-            "to",
+            'to',
             target
         ])
     else:
